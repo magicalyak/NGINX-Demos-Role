@@ -47,7 +47,7 @@
   when: '"Debian" in os_release.stdout' 
 
 - name: Adding sources.list url for NGINX Plus (APT - Ubuntu)
-  shell: printf "deb https://plus-pkgs.nginx.com/debian `lsb_release -cs` nginx-plus\n" >/etc/apt/sources.list.d/nginx-plus.list
+  shell: printf "deb https://plus-pkgs.nginx.com/ubuntu `lsb_release -cs` nginx-plus\n" >/etc/apt/sources.list.d/nginx-plus.list
   when: '"Ubuntu" in os_release.stdout' 
 
 - name: Installing NGINX Plus (APT)

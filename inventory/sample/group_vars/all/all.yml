@@ -20,3 +20,11 @@ download_validate_certs: False
 ignore_assert_errors: true
 
 disable_swap: true
+kube_proxy_mode: ipvs
+is_atomic: false
+
+# Where the binaries will be downloaded.
+# Note: ensure that you've enough disk space (about 1G)
+local_release_dir: "/tmp/releases"
+# Random shifts for retrying failed ops like pushing/downloading
+retry_stagger: 5

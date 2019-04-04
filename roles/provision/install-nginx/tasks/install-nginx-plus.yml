@@ -42,9 +42,13 @@
     dest: /etc/apt/apt.conf.d/90nginx
   when: ansible_os_family == "Debian"
 
-- name: Adding sources.list url for NGINX Plus (APT)
+- name: Adding sources.list url for NGINX Plus (APT - Debian)
   shell: printf "deb https://plus-pkgs.nginx.com/debian `lsb_release -cs` nginx-plus\n" >/etc/apt/sources.list.d/nginx-plus.list
-  when: ansible_os_family == "Debian"
+  when: '"Debian" in os_release.stdout' 
+
+- name: Adding sources.list url for NGINX Plus (APT - Ubuntu)
+  shell: printf "deb https://plus-pkgs.nginx.com/debian `lsb_release -cs` nginx-plus\n" >/etc/apt/sources.list.d/nginx-plus.list
+  when: '"Ubuntu" in os_release.stdout' 
 
 - name: Installing NGINX Plus (APT)
   apt: 

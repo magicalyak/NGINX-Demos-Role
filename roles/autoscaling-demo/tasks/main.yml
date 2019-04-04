@@ -12,10 +12,10 @@
     - scripts
 
 - name: create symlink for nginx plus certs
-  file:
+  copy:
     src: "/etc/ssl/nginx/{{ item }}"
     path: "/srv/NGINX-Demos/autoscaling-demo/nginx_base/{{ item }}"
-    state: link
+    remote_src: yes
   with_items:
     - nginx-repo.crt
     - nginx-repo.key

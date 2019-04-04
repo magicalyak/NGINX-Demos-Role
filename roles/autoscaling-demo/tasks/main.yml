@@ -14,7 +14,7 @@
 - name: create symlink for nginx plus certs
   copy:
     src: "/etc/ssl/nginx/{{ item }}"
-    path: "/srv/NGINX-Demos/autoscaling-demo/nginx_base/{{ item }}"
+    dest: "/srv/NGINX-Demos/autoscaling-demo/nginx_base/{{ item }}"
     remote_src: yes
   with_items:
     - nginx-repo.crt
@@ -31,3 +31,11 @@
 
 - name: create docker image for nginx unit
   command: docker build -t nginxunit /srv/NGINX-Demos/autoscaling-demo/nginx_unit
+
+- name: Present SSH information
+  assert:
+    msg: "You can connect to the autoscale VM by using ssh vagrant@{{ ansible_default_ipv4.address }} -p 2222 -i .vagrant/machines/{{ inventory_hostname }}/virtualbox/private_key"
+
+- name: Present Next Steps
+  assert:
+    msg: "Review the README on how to run the autoscaling demo.  The autoscaling_demo_script.docx may be out of date but also useful."

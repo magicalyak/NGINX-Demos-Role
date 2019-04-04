@@ -12,6 +12,6 @@
   tags:
     - bootstrap-os
 
-- import_tasks: install_nginx_plus.yml
+- import_tasks: install-nginx-plus.yml
   tags: 
     - install-nginx

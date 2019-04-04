@@ -1,2 +1,24 @@
 ---
-- import_tasks: autoscale.yml
+- name: copy directories for autoscaling
+  copy:
+    src: "files/{{ item }}"
+    dest: "/srv/NGINX-Demos/autoscaling-demo/{{ item }}"
+  with_items:
+    - nginx_base
+    - nginx_config
+    - nginx_lb
+    - nginx_unit
+    - nginx_ws
+    - scripts
+
+- name: create docker image for nginx plus
+  command: docker build -t nginxplus /srv/NGINX-Demos/autoscaling-demo/nginx_base
+
+- name: create docker image for nginx load balancer
+  command: docker build -t nginxpluslb /srv/NGINX-Demos/autoscaling-demo/nginx_lb
+
+- name: create docker image for nginx web server
+  command: docker build -t nginxplusws /srv/NGINX-Demos/autoscaling-demo/nginx_ws
+
+- name: create docker image for nginx unit
+  command: docker build -t nginxunit /srv/NGINX-Demos/autoscaling-demo/nginx_unit

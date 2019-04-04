@@ -1,12 +1,2 @@
 ---
-- name: Setup base
-  import_tasks: nginx_base.yml
-
-- name: Setup Load Balancer
-  import_tasks: nginx_lb.yml
-
-- name: Setup Web Server
-  import_tasks: nginx_wb.yml
-
-- name: Setup Unit
-  import_tasks: nginx_unit.yml
+- import_tasks: autoscale.yml

@@ -56,7 +56,7 @@ def getStatus(client, statusURL, path):
     try:
         response = client.get(url) # Make an NGINX Plus API call
     except requests.exceptions.ConnectionError:
-        print "Error: Unable to connect to " + url
+        print("Error: Unable to connect to " + url)
         sys.exit(1)
 
     if response.status_code == 200:

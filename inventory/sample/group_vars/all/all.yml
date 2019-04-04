@@ -18,3 +18,5 @@ download_validate_certs: False
 
 ## Set to true to allow pre-checks to fail and continue deployment
 ignore_assert_errors: true
+
+disable_swap: true

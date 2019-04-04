@@ -50,3 +50,5 @@ etc_hosts_localhost_entries:
     unexpected:
       - localhost
       - localhost.localdomain
+
+disable_swap: true

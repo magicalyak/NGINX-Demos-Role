@@ -1,7 +1,7 @@
 ---
 - name: copy directories for autoscaling
   copy:
-    src: "files/{{ item }}"
+    src: "files/{{ item }}/"
     dest: "/srv/NGINX-Demos/autoscaling-demo/{{ item }}"
   with_items:
     - nginx_base

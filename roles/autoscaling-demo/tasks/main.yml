@@ -11,6 +11,15 @@
     - nginx_ws
     - scripts
 
+- name: create symlink for nginx plus certs
+  file:
+    src: "/etc/ssl/nginx/{{ item }}"
+    path: "/srv/NGINX-Demos/autoscaling-demo/nginx_base/{{ item }}"
+    state: link
+  with_items:
+    - nginx-repo.crt
+    - nginx-repo.key
+
 - name: create docker image for nginx plus
   command: docker build -t nginxplus /srv/NGINX-Demos/autoscaling-demo/nginx_base
 

@@ -52,3 +52,4 @@ etc_hosts_localhost_entries:
       - localhost.localdomain
 
 disable_swap: true
+kube_proxy_mode: ipvs

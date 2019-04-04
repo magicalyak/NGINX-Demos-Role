@@ -29,7 +29,7 @@ $demoname = "autoscaling"
 $instance_name_prefix = "nginx"
 $vm_gui = false
 $vm_memory = 2048
-$vm_cpu = 1
+$vm_cpus = 1
 $shared_folders = {}
 $forwarded_ports = {}
 $subnet = "172.17.8"
@@ -92,7 +92,7 @@ Vagrant.configure(2) do |config|
     config.disksize.size = $disk_size
   end
 
-  config.vm.define vm_name = "%s-%01d" % [$instance_name_prefix, "demovm"] do |node|
+  config.vm.define vm_name = $instance_name_prefix + "-demovm" do |node|
 
     node.vm.hostname = vm_name
 
@@ -137,7 +137,7 @@ Vagrant.configure(2) do |config|
     end
 
     node.vm.synced_folder ".", "/vagrant", disabled: false, type: "rsync", rsync__args: ['--verbose', '--archive', '--delete', '-z'] , rsync__exclude: ['.git','venv']
-    node.vm.synced_folder "./roles/common/files", "/src/NGINX-Demos/random-files", disabled: false, type: "rsync", rsync__args: ['--verbose', '--archive', '--delete', '-z'], rsync__exclude: ['.git','venv']
+    #node.vm.synced_folder "./roles/common/files", "/src/NGINX-Demos/random-files", disabled: false, type: "rsync", rsync__args: ['--verbose', '--archive', '--delete', '-z'], rsync__exclude: ['.git','venv']
     $shared_folders.each do |src, dst|
       node.vm.synced_folder src, dst, type: "rsync", rsync__args: ['--verbose', '--archive', '--delete', '-z']
     end
@@ -177,7 +177,7 @@ Vagrant.configure(2) do |config|
 
     if ($demoname)
       node.vm.provision "ansible" do |ansible|
-        ansible.playbook = "%s-%01d" % [$demoname, "demo.yml"]
+        ansible.playbook = $demoname + "-demo.yml"
         $ansible_inventory_path = File.join( $inventory, "hosts.ini")
         if File.exist?($ansible_inventory_path)
           ansible.inventory_path = $ansible_inventory_path

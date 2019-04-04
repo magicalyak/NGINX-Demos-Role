@@ -1,0 +1,20 @@
+## Directory where etcd data stored
+etcd_data_dir: /var/lib/etcd
+
+## Directory where the binaries will be installed
+bin_dir: /usr/local/bin
+
+## Set these proxy values in order to update package manager and docker daemon to use proxies
+#http_proxy: ""
+#https_proxy: ""
+
+## Refer to roles/kubespray-defaults/defaults/main.yml before modifying no_proxy
+#no_proxy: ""
+
+## Some problems may occur when downloading files over https proxy due to ansible bug
+## https://github.com/ansible/ansible/issues/32750. Set this variable to False to disable
+## SSL validation of get_url module. Note that kubespray will still be performing checksum validation.
+download_validate_certs: False
+
+## Set to true to allow pre-checks to fail and continue deployment
+ignore_assert_errors: true

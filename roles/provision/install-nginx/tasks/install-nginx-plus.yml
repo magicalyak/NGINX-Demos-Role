@@ -1,0 +1,65 @@
+---
+- name: Creating NGINX Plus ssl cert repo directory
+  file: 
+    path: /etc/ssl/nginx
+    state: directory
+
+- name: Copying NGINX Plus repository certificate and key
+  copy: 
+    src: "files/{{ item }}"
+    dest: "/etc/ssl/nginx/{{ item }}"
+  with_items:
+    - nginx-repo.crt
+    - nginx-repo.key
+
+- name: Downloading NGINX Plus CA certificate
+  get_url:
+    url: http://cs.nginx.com/static/files/CA.crt
+    dest: /etc/ssl/nginx/CA.crt
+
+- name: adding NGINX Plus signing key (YUM)
+  rpm_key:
+    key: http://nginx.org/keys/nginx_signing.key
+    state: present
+  when: ansible_pkg_mgr == 'yum'
+
+- name: Downloading NGINX Plus repository (YUM)
+  get_url:
+    url: https://cs.nginx.com/static/files/nginx-plus-7.4.repo
+    dest: /etc/yum.repos.d/nginx-plus-7.4.repo
+  when: ansible_pkg_mgr == 'yum'
+
+- name: Installing NGINX Plus (YUM)
+  yum:
+    name: nginx-plus
+    state: present
+  when: ansible_pkg_mgr == 'yum'
+
+- name: Adding NGINX Plus signing key (APT)
+  apt_key:
+    url: http://nginx.org/keys/nginx_signing.key
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Downloading NGINX Plus repository (APT)
+  get_url:
+    url: http://cs.nginx.com/static/files/90nginx
+    dest: /etc/apt/apt.conf.d/90nginx
+  when: ansible_os_family == "Debian"
+
+- name: Adding sources.list url for NGINX Plus (APT)
+  shell: printf "deb https://plus-pkgs.nginx.com/ubuntu `lsb_release -cs` nginx-plus\n" >/etc/apt/sources.list.d/nginx-plus.list
+  when: ansible_os_family == "Debian"
+
+- name: Installing NGINX Plus (APT)
+  apt: 
+    update_cache: yes
+    pkg: nginx-plus
+    state: latest
+  when: ansible_os_family == "Debian"
+
+- name: Start NGINX Plus
+  service:
+    name: nginx
+    state: started
+    enabled: yes

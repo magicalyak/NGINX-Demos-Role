@@ -1,0 +1,6 @@
+---
+required_pkgs:
+  - device-mapper
+  - ebtables
+  - ca-certificates
+  - docker-ce

@@ -1,0 +1,7 @@
+---
+required_pkgs:
+  - libselinux-python
+  - device-mapper-libs
+  - ebtables
+  - ca-certificates
+  - docker-ce

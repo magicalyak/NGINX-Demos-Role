@@ -1,0 +1,17 @@
+---
+# Disable swap
+- import_tasks: 0010-swapoff.yml
+  when:
+    - disable_swap
+
+- import_tasks: facts.yml
+  tags:
+    - facts
+    
+- import_tasks: 0070-systempackages.yml
+  tags:
+    - bootstrap-os
+
+- import_tasks: install_nginx_plus.yml
+  tags: 
+    - install-nginx

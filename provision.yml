@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  gather_facts: false
+  become: no
+  tasks:
+    - name: "Check ansible version !=2.7.0"
+      assert:
+        msg: "Ansible V2.7.0 can't be used until: https://github.com/ansible/ansible/issues/46600 is fixed"
+        that:
+          - ansible_version.string is version("2.7.0", "!=")
+          - ansible_version.string is version("2.6.0", ">=")
+      tags:
+        - check
+  vars:
+    ansible_connection: local
+
+- hosts: node
+  roles:
+    - { role: provision/bootstrap-os, tags: bootstrap-os}
+    - { role: provision/install-nginx, tags: install-nginx}
